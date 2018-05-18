@@ -33,7 +33,7 @@ object DplCtl extends Serializable{
     val props=new Properties()
     props.put("user",target.user)
     props.put("password",target.password)
-    props.put("url",target.jdbcUrl)
+    //props.put("url",target.jdbcUrl)
     props.put("sid",target.sid)
     println(props)
     
@@ -45,13 +45,13 @@ object DplCtl extends Serializable{
     }
     def directPathLoad( df : DataFrame, tableName : String ) :Unit = {
       val strtp = df.schema
-      df.repartition(10).foreachPartition(rcdProc(strtp,props,tableName))
-      //df.foreachPartition(rcdProc(strtp,props,tableName))
+      //df.repartition(10).foreachPartition(rcdProc(strtp,props,tableName))
+      df.foreachPartition(rcdProc(strtp,props,tableName))
     }
 }
-val df = sqlContext.read.parquet("C:/tmp/PARQUET_TEST")
 
 //**********************************************************
 // Execute DirectPathLoad
 //**********************************************************
-DplCtl.directPathLoad( df, "PARQUET_TEST" )
+//val df = sqlContext.read.parquet("C:/tmp/PARQUET_TEST")
+//DplCtl.directPathLoad( df, "PARQUET_TEST" )
