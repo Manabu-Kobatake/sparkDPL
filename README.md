@@ -70,11 +70,68 @@ Load arbitrary DataFrame (DataSet) generated on APACHE SPARK into Oracle Databas
 
 6.Execute DplCtl.directPathLoad
 
-    Usage:DplCtl.directPathLoad( src, dest )
+    Usage:DplCtl.directPathLoad( src, dest, parallel )
     src:  input DataFrame
     dest: target table name
+    parallel: Parallel degree of direct path load
 
-    scala> DplCtl.directPathLoad( df, "PARQUET_TEST" )
+    scala> DplCtl.directPathLoad( df, "PARQUET_TEST", 10 )
+    2018/05/19 23:40:27.275 INFO DAGScheduler[dag-scheduler-event-loop]: Got job 2 (foreachPartition at <console>:79) with 4 output partitions
+    2018/05/19 23:40:27.275 INFO DAGScheduler[dag-scheduler-event-loop]: Final stage: ResultStage 3 (foreachPartition at <console>:79)
+    ...
+    2018/05/19 23:40:27.302 INFO SparkContext[dag-scheduler-event-loop]: Created broadcast 5 from broadcast at DAGScheduler.scala:1012
+    2018/05/19 23:40:27.305 INFO DAGScheduler[dag-scheduler-event-loop]: Submitting 1 missing tasks from ShuffleMapStage 2 (MapPartitionsRDD[10] at foreachPartition at <console>:79)
+    ...
+    2018/05/19 23:40:27.330 INFO FileScanRDD[Executor task launch worker-0]: Reading File path: file:///C:/tmp/PARQUET_TEST/part-r-00000-181ceec6-fcb8-4f8e-84c9-333ceb20fc79.snappy.parquet, range: 0-18479, partition values: [empty row]
+    ...
+    2018/05/19 23:40:27.862 INFO TaskSetManager[dispatcher-event-loop-3]: Starting task 0.0 in stage 3.0 (TID 3, localhost, partition 0, ANY, 5313 bytes)
+    2018/05/19 23:40:27.863 INFO TaskSetManager[dispatcher-event-loop-3]: Starting task 1.0 in stage 3.0 (TID 4, localhost, partition 1, ANY, 5313 bytes)
+    2018/05/19 23:40:27.865 INFO TaskSetManager[dispatcher-event-loop-3]: Starting task 2.0 in stage 3.0 (TID 5, localhost, partition 2, ANY, 5313 bytes)
+    2018/05/19 23:40:27.868 INFO TaskSetManager[dispatcher-event-loop-3]: Starting task 3.0 in stage 3.0 (TID 6, localhost, partition 3, ANY, 5313 bytes)
+    2018/05/19 23:40:27.869 INFO Executor[Executor task launch worker-0]: Running task 0.0 in stage 3.0 (TID 3)
+    2018/05/19 23:40:27.871 INFO Executor[Executor task launch worker-2]: Running task 2.0 in stage 3.0 (TID 5)
+    2018/05/19 23:40:27.871 INFO Executor[Executor task launch worker-3]: Running task 3.0 in stage 3.0 (TID 6)
+    2018/05/19 23:40:27.871 INFO Executor[Executor task launch worker-1]: Running task 1.0 in stage 3.0 (TID 4)
+    ...
+    Spark2dpl load START
+    Spark2dpl.dll
+    Spark2dpl load END
+    2018/05/19 23:40:28.022 INFO Spark2dpl[Executor task launch worker-0]: spark2dpl[java] load start
+    2018/05/19 23:40:28.022 INFO Spark2dpl[Executor task launch worker-3]: spark2dpl[java] load start
+    2018/05/19 23:40:28.022 INFO Spark2dpl[Executor task launch worker-1]: spark2dpl[java] load start
+    2018/05/19 23:40:28.022 INFO Spark2dpl[Executor task launch worker-2]: spark2dpl[java] load start
+    2018/05/19 23:40:28.024 INFO Spark2dpl[Executor task launch worker-1]: OCI Initialize start
+    2018/05/19 23:40:28.023 INFO Spark2dpl[Executor task launch worker-3]: OCI Initialize start
+    2018/05/19 23:40:28.025 INFO Spark2dpl[Executor task launch worker-2]: OCI Initialize start
+    2018/05/19 23:40:28.417 INFO Spark2dpl[Executor task launch worker-1]: readyDirectPathLoad start
+    2018/05/19 23:40:28.424 INFO Spark2dpl[Executor task launch worker-2]: readyDirectPathLoad start
+    2018/05/19 23:40:28.429 INFO Spark2dpl[Executor task launch worker-0]: readyDirectPathLoad start
+    2018/05/19 23:40:28.429 INFO Spark2dpl[Executor task launch worker-3]: readyDirectPathLoad start
+    2018/05/19 23:40:28.655 INFO Spark2dpl[Executor task launch worker-3]: total record cnt 250 load success
+    2018/05/19 23:40:28.656 INFO Spark2dpl[Executor task launch worker-1]: total record cnt 250 load success
+    2018/05/19 23:40:28.667 INFO Spark2dpl[Executor task launch worker-2]: total record cnt 250 load success
+    2018/05/19 23:40:28.692 INFO Spark2dpl[Executor task launch worker-0]: total record cnt 250 load success
+    2018/05/19 23:40:28.719 INFO Spark2dpl[Executor task launch worker-3]: spark2dpl[java] load end. result=true
+    result=true
+    2018/05/19 23:40:28.721 INFO Spark2dpl[Executor task launch worker-1]: spark2dpl[java] load end. result=true
+    result=true
+    2018/05/19 23:40:28.723 INFO Spark2dpl[Executor task launch worker-2]: spark2dpl[java] load end. result=true
+    result=true
+    2018/05/19 23:40:28.728 INFO Executor[Executor task launch worker-1]: Finished task 1.0 in stage 3.0 (TID 4). 1756 bytes result sent to driver
+    2018/05/19 23:40:28.731 INFO Executor[Executor task launch worker-2]: Finished task 2.0 in stage 3.0 (TID 5). 1756 bytes result sent to driver
+    2018/05/19 23:40:28.732 INFO Executor[Executor task launch worker-3]: Finished task 3.0 in stage 3.0 (TID 6). 1843 bytes result sent to driver
+    2018/05/19 23:40:28.736 INFO TaskSetManager[task-result-getter-0]: Finished task 2.0 in stage 3.0 (TID 5) in 872 ms on localhost (1/4)
+    2018/05/19 23:40:28.740 INFO TaskSetManager[task-result-getter-3]: Finished task 1.0 in stage 3.0 (TID 4) in 877 ms on localhost (2/4)
+    2018/05/19 23:40:28.742 INFO TaskSetManager[task-result-getter-1]: Finished task 3.0 in stage 3.0 (TID 6) in 876 ms on localhost (3/4)
+    2018/05/19 23:40:28.911 INFO Spark2dpl[Executor task launch worker-0]: spark2dpl[java] load end. result=true
+    result=true
+    2018/05/19 23:40:28.916 INFO Executor[Executor task launch worker-0]: Finished task 0.0 in stage 3.0 (TID 3). 1756 bytes result sent to driver
+    2018/05/19 23:40:28.919 INFO TaskSetManager[task-result-getter-2]: Finished task 0.0 in stage 3.0 (TID 3) in 1059 ms on localhost (4/4)
+    2018/05/19 23:40:28.920 INFO DAGScheduler[dag-scheduler-event-loop]: ResultStage 3 (foreachPartition at <console>:79) finished in 1.060 s
+    2018/05/19 23:40:28.922 INFO DAGScheduler[main]: Job 2 finished: foreachPartition at <console>:79, took 1.651431 s
+    2018/05/19 23:40:28.922 INFO TaskSchedulerImpl[task-result-getter-2]: Removed TaskSet 3.0, whose tasks have all completed, from pool
+
+    scala>
 
 
 7.Confirm result loaded into table
@@ -104,21 +161,15 @@ Load arbitrary DataFrame (DataSet) generated on APACHE SPARK into Oracle Databas
 2.Add the following directories to the include directory
 
     %JAVA_HOME%\include
-
     %JAVA_HOME%\include\win32\bridge
-
     %JAVA_HOME%\include\win32
-
     %ORACLE_HOME%\oci\include
 
 3.Add the following directories to the library directory
 
     %ORACLE_HOME%\rdbms\lib
-
     %ORACLE_HOME%\oci\lib
-
     %ORACLE_HOME%\oci\lib\msvc
-
     %ORACLE_HOME%\oci\lib\msvc\vc14
 
 4.Build a project and generate Spark2dpl.dll
@@ -126,9 +177,7 @@ Load arbitrary DataFrame (DataSet) generated on APACHE SPARK into Oracle Databas
 5.Compile Spark2dpl.java on javac(Specify jar of spark in CLASSPATH)
 
     %SPARK_HOME%\jars\spark-sql_x.xx.jar
-
     %SPARK_HOME%\jars\scala-library-x.xx.jar
-
     %SPARK_HOME%\jars\spark-catalyst_x.xx.jar
 
 6.Customize spark-shell.cmd
@@ -140,6 +189,10 @@ Specify the directory of Spark2dpl.class in SPARKCLASSPATH
 Specify directory of Spark2dpl.dll in PATH
 
     SET PATH=%PATH%;C:\work\spark2dpl\x64\Release\
+    
+Specify NLS_LANG
+
+    SET NLS_LANG=japanese_japan.JA16SJIS
 
 ## Contribution
 
