@@ -4,6 +4,8 @@ Oracle Direct-Path-Load on Apache SPARK Library
 ## Description
 Load arbitrary DataFrame (DataSet) generated on APACHE SPARK into Oracle Database table at high speed using OCI Direct-Path-Load Engine.
 
+![Outline](https://github.com/Manabu-Kobatake/sparkDPL/blob/master/img/Outline.png?raw=true)
+  
 ## Demo
 
 ## Requirement
